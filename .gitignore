@@ -1,0 +1,36 @@
+# SSL Certificates (never commit private keys!)
+ssl/*.crt
+ssl/*.key
+ssl/*.pem
+
+# Excel / Office files
+*.xlsx
+*.xls
+*.docx
+*.doc
+*.pptx
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Admin Basic Auth password file (mounted as volume at runtime)
+.htpasswd
+
+# Environment / secrets
+.env
+
+# Editor directories
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Node
+node_modules/
+
+# Environment files — NEVER commit secrets!
+.env
+.env.*
+!.env.example

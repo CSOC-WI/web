@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="th">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SLC - บริการ</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.0.0/fonts/remixicon.css" rel="stylesheet" />
+    <style>
+        .svc-hero {
+            background: linear-gradient(135deg, #0A1628 0%, #0F2040 60%, #162D50 100%);
+            padding: 140px 0 80px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .svc-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: radial-gradient(ellipse at 70% 50%, rgba(0, 200, 150, 0.06) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .svc-hero-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .svc-hero .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.82rem;
+            color: rgba(255, 255, 255, 0.45);
+            margin-bottom: 20px;
+        }
+
+        .svc-hero .breadcrumb a {
+            color: var(--color-primary);
+            text-decoration: none;
+        }
+
+        .svc-hero .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .svc-hero .svc-icon-lg {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .svc-hero h1 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: #fff;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .svc-hero h1 span {
+            color: var(--color-primary);
+        }
+
+        .svc-hero .lead {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.65);
+            max-width: 640px;
+            line-height: 1.8;
+        }
+
+        .svc-hero .hero-cta {
+            margin-top: 32px;
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+        .svc-body {
+            padding: 80px 0;
+        }
+
+        .svc-grid {
+            display: grid;
+            grid-template-columns: 1fr 340px;
+            gap: 50px;
+            align-items: start;
+        }
+
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 32px 0;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 14px;
+            padding: 14px 0;
+            border-bottom: 1px solid var(--color-border);
+        }
+
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+
+        .feature-list .fi {
+            font-size: 1.2rem;
+            margin-top: 1px;
+            flex-shrink: 0;
+        }
+
+        .feature-list h4 {
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--color-dark);
+            margin-bottom: 4px;
+        }
+
+        .feature-list p {
+            font-size: 0.85rem;
+            color: var(--color-text-light);
+            line-height: 1.6;
+        }
+
+        .benefit-cards {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-top: 40px;
+        }
+
+        .benefit-card {
+            background: var(--color-bg);
+            border: 1px solid var(--color-border);
+            border-radius: 12px;
+            padding: 22px;
+            text-align: center;
+        }
+
+        .benefit-card .bi {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+
+        .benefit-card h4 {
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--color-dark);
+            margin-bottom: 6px;
+        }
+
+        .benefit-card p {
+            font-size: 0.8rem;
+            color: var(--color-text-light);
+            line-height: 1.5;
+        }
+
+        /* Sticky sidebar */
+        .svc-sidebar {
+            position: sticky;
+            top: 90px;
+        }
+
+        .sidebar-card {
+            background: var(--color-dark);
+            border-radius: 16px;
+            padding: 30px;
+            border: 1px solid rgba(0, 200, 150, 0.15);
+            margin-bottom: 20px;
+        }
+
+        .sidebar-card h4 {
+            color: var(--color-primary);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            margin-bottom: 16px;
+        }
+
+        .sidebar-card .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sidebar-card .ci {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: rgba(255, 255, 255, 0.65);
+            font-size: 0.87rem;
+        }
+
+        .sidebar-card .ci i {
+            color: var(--color-primary);
+            font-size: 1rem;
+        }
+
+        .related-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .related-list li a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.88rem;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .related-list li:last-child a {
+            border-bottom: none;
+        }
+
+        .related-list li a:hover {
+            color: var(--color-primary);
+        }
+
+        .related-list li a i {
+            font-size: 0.8rem;
+        }
+
+        .section-label {
+            display: inline-block;
+            background: rgba(0, 200, 150, 0.1);
+            color: var(--color-primary);
+            border: 1px solid rgba(0, 200, 150, 0.25);
+            border-radius: 20px;
+            padding: 5px 16px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .h2-dark {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--color-dark);
+            margin-bottom: 14px;
+        }
+
+        .h2-dark span {
+            color: var(--color-primary);
+        }
+
+        @media(max-width:900px) {
+            .svc-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .svc-sidebar {
+                position: static;
+            }
+
+            .benefit-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ── NAVBAR (same as index.html) ── -->
+    <nav id="navbar">
+        <div class="container nav-inner">
+            <a href="index.html" class="nav-logo">
+                <img src="images/42bc1985-0f80-46b9-84fc-d5f7a5728688.png" alt="SLC Logo" />
+                <div class="nav-logo-text">
+                    <span class="name">SLC</span>
+                    <span class="subtitle">Security Life Cycle</span>
+                </div>
+            </a>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="nav-link">หน้าแรก</a></li>
+                <li><a href="index.html#about" class="nav-link">เกี่ยวกับเรา</a></li>
+                <li class="nav-item">
+                    <a href="index.html#services" class="nav-link active">บริการ <i
+                            class="ri-arrow-down-s-line"></i></a>
+                    <div class="dropdown">
+                        <a href="service-detail.html?id=backup-dr">Backup &amp; DR Solution</a>
+                        <a href="service-detail.html?id=log-solution">Log Solution</a>
+                        <a href="service-detail.html?id=mfa">Multi-Factor Authentication (MFA)</a>
+                        <a href="service-detail.html?id=pentest">Penetration Testing (Pentest)</a>
+                        <a href="service-detail.html?id=web-security">Web Security</a>
+                        <a href="service-detail.html?id=siem">SIEM</a>
+                        <a href="service-detail.html?id=endpoint">Endpoint Security</a>
+                        <a href="service-detail.html?id=csoc">CSOC As a Service</a>
+                    </div>
+                </li>
+                <li><a href="index.html#contact" class="nav-link">ติดต่อเรา</a></li>
+            </ul>
+            <div class="nav-actions">
+                <a href="index.html#contact" class="btn btn-primary"
+                    style="padding:10px 22px;font-size:.88rem;">ปรึกษาผู้เชี่ยวชาญ</a>
+                <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero -->
+    <section class="svc-hero">
+        <div class="container svc-hero-inner">
+            <div class="breadcrumb">
+                <a href="index.html">หน้าแรก</a>
+                <i class="ri-arrow-right-s-line"></i>
+                <a href="index.html#services">บริการ</a>
+                <i class="ri-arrow-right-s-line"></i>
+                <span id="hero-breadcrumb">...</span>
+            </div>
+            <span id="hero-icon" class="svc-icon-lg">🛡️</span>
+            <h1 id="hero-title">กำลังโหลด...</h1>
+            <p class="lead" id="hero-desc"></p>
+            <div class="hero-cta">
+                <a href="index.html#contact" class="btn btn-primary">ขอใบเสนอราคา <i class="ri-send-plane-line"></i></a>
+                <a href="index.html#contact" class="btn btn-outline">ปรึกษาผู้เชี่ยวชาญฟรี</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Body -->
+    <section class="svc-body">
+        <div class="container">
+            <div class="svc-grid">
+                <!-- Main content -->
+                <div>
+                    <span class="section-label" id="body-tag">คุณสมบัติ</span>
+                    <h2 class="h2-dark" id="body-title">ฟีเจอร์และคุณสมบัติ</h2>
+                    <p id="body-intro" style="color:var(--color-text-light);line-height:1.8;margin-bottom:8px;"></p>
+
+                    <ul class="feature-list" id="feature-list"></ul>
+
+                    <div style="margin-top:48px;">
+                        <span class="section-label">ประโยชน์ที่ได้รับ</span>
+                        <h2 class="h2-dark">ทำไมต้องเลือก<span> บริการนี้?</span></h2>
+                        <div class="benefit-cards" id="benefit-cards"></div>
+                    </div>
+                </div>
+
+                <!-- Sidebar -->
+                <aside class="svc-sidebar">
+                    <div class="sidebar-card">
+                        <h4>ติดต่อฝ่ายขาย</h4>
+                        <div class="contact-info">
+                            <div class="ci"><i class="ri-phone-line"></i> 02-xxx-xxxx</div>
+                            <div class="ci"><i class="ri-mail-line"></i> contact@slc.co.th</div>
+                            <div class="ci"><i class="ri-time-line"></i> จันทร์–ศุกร์ 08:30–17:30</div>
+                            <div class="ci"><i class="ri-shield-check-line"></i> CSOC เฝ้าระวัง 24/7</div>
+                        </div>
+                        <a href="index.html#contact" class="btn btn-primary"
+                            style="width:100%;text-align:center;margin-top:20px;display:block;">
+                            ขอใบเสนอราคา <i class="ri-arrow-right-line"></i>
+                        </a>
+                    </div>
+
+                    <div class="sidebar-card">
+                        <h4>บริการอื่นๆ</h4>
+                        <ul class="related-list" id="related-list"></ul>
+                    </div>
+                </aside>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer minimal -->
+    <footer id="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <img src="images/42bc1985-0f80-46b9-84fc-d5f7a5728688.png" alt="SLC Logo"
+                        style="height:48px;width:auto;object-fit:contain;" />
+                    <p style="margin-top:12px;">Security Life Cycle (SLC) ผู้ให้บริการ Cyber Security ครบวงจร
+                        บริษัทในเครือ INET</p>
+                    <div class="social-links" style="margin-top:16px;">
+                        <a href="#" class="social-link"><i class="ri-facebook-fill"></i></a>
+                        <a href="#" class="social-link"><i class="ri-linkedin-fill"></i></a>
+                        <a href="#" class="social-link"><i class="ri-twitter-x-line"></i></a>
+                        <a href="#" class="social-link"><i class="ri-youtube-fill"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h5>บริการ</h5>
+                    <ul>
+                        <li><a href="service-detail.html?id=backup-dr">Backup &amp; DR Solution</a></li>
+                        <li><a href="service-detail.html?id=log-solution">Log Solution</a></li>
+                        <li><a href="service-detail.html?id=mfa">MFA</a></li>
+                        <li><a href="service-detail.html?id=pentest">Pentest</a></li>
+                        <li><a href="service-detail.html?id=web-security">Web Security</a></li>
+                        <li><a href="service-detail.html?id=siem">SIEM</a></li>
+                        <li><a href="service-detail.html?id=endpoint">Endpoint Security</a></li>
+                        <li><a href="service-detail.html?id=csoc">CSOC As a Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>บริษัท</h5>
+                    <ul>
+                        <li><a href="index.html#about">เกี่ยวกับเรา</a></li>
+                        <li><a href="index.html#why-slc">ทำไมต้อง SLC</a></li>
+                        <li><a href="index.html#certifications">การรับรองมาตรฐาน</a></li>
+                        <li><a href="index.html#contact">ติดต่อเรา</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h5>ติดต่อ</h5>
+                    <ul>
+                        <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+                        <li><a href="#">เงื่อนไขการใช้บริการ</a></li>
+                        <li><a href="#">PDPA</a></li>
+                    </ul>
+                    <div style="margin-top:16px;"><a href="index.html#contact" class="btn btn-primary"
+                            style="font-size:0.82rem;padding:10px 18px;">ปรึกษาผู้เชี่ยวชาญ</a></div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p class="footer-copy">© 2025 Security Life Cycle Co., Ltd. (SLC) บริษัทในเครือ INET สงวนลิขสิทธิ์</p>
+            </div>
+        </div>
+    </footer>
+
+    <button id="back-to-top" onclick="window.scrollTo({top:0,behavior:'smooth'})"><i
+            class="ri-arrow-up-line"></i></button>
+
+    <script>
+        // ── SERVICE DATA ──────────────────────────────────────────────────
+        const SERVICES = {
+            'backup-dr': {
+                icon: '💾',
+                title: 'Backup &amp; DR Solution',
+                titlePlain: 'Backup & DR Solution',
+                tag: 'สำรองข้อมูล & กู้คืนระบบ',
+                desc: 'ระบบสำรองข้อมูลและกู้คืนระบบสำหรับธุรกิจ ด้วยโซลูชัน Backup & Disaster Recovery ที่ครบวงจร ช่วยให้ธุรกิจสามารถกู้คืนระบบได้อย่างรวดเร็ว ลดผลกระทบต่อการดำเนินธุรกิจ',
+                intro: 'SLC ให้บริการ Backup & DR Solution ที่ออกแบบมาเพื่อปกป้องข้อมูลสำคัญขององค์กร ด้วยเทคโนโลยีที่ทันสมัยและระบบสำรองข้อมูลอัตโนมัติ พร้อมการกู้คืนระบบที่รวดเร็วเพื่อให้ธุรกิจดำเนินต่อได้โดยไม่หยุดชะงัก',
+                features: [
+                    { icon: '🔄', h: 'Automated Backup', p: 'สำรองข้อมูลอัตโนมัติตามตารางเวลาที่กำหนด ทั้ง incremental และ full backup' },
+                    { icon: '⚡', h: 'Rapid Recovery (RTO < 1 ชม.)', p: 'กู้คืนระบบได้ภายใน 1 ชั่วโมง ลด downtime และความเสียหายต่อธุรกิจ' },
+                    { icon: '☁️', h: 'Cloud & On-Premise', p: 'รองรับการสำรองข้อมูลทั้งบน Cloud และ On-Premise ตามความต้องการขององค์กร' },
+                    { icon: '🔐', h: 'Encryption ทุก Layer', p: 'ข้อมูลถูกเข้ารหัสทั้งขณะส่งผ่าน (in-transit) และขณะจัดเก็บ (at-rest)' },
+                    { icon: '📊', h: 'Monitoring & Reporting', p: 'ระบบติดตามและรายงานสถานะการสำรองข้อมูลแบบ Real-time' },
+                    { icon: '🧪', h: 'DR Testing', p: 'ทดสอบแผน Disaster Recovery อย่างสม่ำเสมอเพื่อให้มั่นใจว่าระบบพร้อมใช้งาน' },
+                ],
+                benefits: [
+                    { icon: '💰', h: 'ลดความเสียหายทางธุรกิจ', p: 'ป้องกันการสูญเสียข้อมูลและรายได้จาก Downtime' },
+                    { icon: '⚡', h: 'กู้คืนเร็ว', p: 'RTO และ RPO ที่ต่ำ ทำให้ธุรกิจกลับมาทำงานได้เร็ว' },
+                    { icon: '✅', h: 'ผ่าน Compliance', p: 'รองรับ PDPA, ISO 27001 และมาตรฐานสากลอื่นๆ' },
+                    { icon: '🔧', h: 'จัดการง่าย', p: 'ควบคุมผ่าน Dashboard เดียว ไม่ต้องใช้ทีม IT ขนาดใหญ่' },
+                ]
+            },
+            'log-solution': {
+                icon: '📋',
+                title: 'Log Solution',
+                titlePlain: 'Log Solution',
+                tag: 'บริหารจัดการ Log',
+                desc: 'ระบบบริหารจัดการ Log ที่ช่วยรวบรวม จัดเก็บ วิเคราะห์ และตรวจสอบ Event จากระบบต่างๆ เพื่อการตรวจสอบ Compliance และค้นหาภัยคุกคาม',
+                intro: 'Log Solution ของ SLC รวบรวม Log จากทุกระบบในองค์กร ไม่ว่าจะเป็น Server, Network Device, Application หรือ Cloud Service มาวิเคราะห์แบบรวมศูนย์ เพื่อให้ทีม IT มองเห็นทุกกิจกรรมที่เกิดขึ้นในระบบ',
+                features: [
+                    { icon: '🗄️', h: 'Centralized Log Management', p: 'รวบรวม Log จากทุกแหล่งมาไว้ที่ศูนย์กลาง ค้นหาและวิเคราะห์ได้ง่าย' },
+                    { icon: '🔍', h: 'Real-time Search & Analysis', p: 'ค้นหาและวิเคราะห์ Log ได้ทันทีด้วย Full-text Search Engine ประสิทธิภาพสูง' },
+                    { icon: '📅', h: 'Long-term Retention', p: 'จัดเก็บ Log ระยะยาวตามกฎหมายและ Compliance เช่น PDPA, BOT' },
+                    { icon: '⚠️', h: 'Alert & Notification', p: 'แจ้งเตือนทันทีเมื่อพบ Event ผิดปกติ ผ่าน Email, LINE, SMS' },
+                    { icon: '📊', h: 'Dashboard & Report', p: 'Dashboard แบบ Real-time และรายงานสรุปสำหรับผู้บริหาร' },
+                    { icon: '🔗', h: 'Multi-source Integration', p: 'รองรับ Syslog, Windows Event, API, Cloud Logs และอื่นๆ' },
+                ],
+                benefits: [
+                    { icon: '🔎', h: 'ค้นหาภัยคุกคามเร็ว', p: 'ลดเวลาค้นหา Incident จากชั่วโมงเป็นนาที' },
+                    { icon: '📜', h: 'ผ่าน Compliance', p: 'รองรับ PDPA, BOT Regulation, ISO 27001' },
+                    { icon: '🧩', h: 'ครอบคลุมทุกระบบ', p: 'รองรับทุก Platform ทั้ง On-Premise และ Cloud' },
+                    { icon: '💡', h: 'Forensic Ready', p: 'ข้อมูล Log ที่น่าเชื่อถือสำหรับการสอบสวน' },
+                ]
+            },
+            'mfa': {
+                icon: '🔐',
+                title: 'Multi-Factor Authentication <span>(MFA)</span>',
+                titlePlain: 'Multi-Factor Authentication (MFA)',
+                tag: 'ยืนยันตัวตนหลายชั้น',
+                desc: 'เพิ่มความปลอดภัยในการเข้าถึงระบบด้วย MFA ยืนยันตัวตนหลายชั้น ป้องกันการเข้าถึงโดยไม่ได้รับอนุญาต แม้รหัสผ่านจะถูกขโมย',
+                intro: 'MFA Solution ของ SLC เพิ่มชั้นการป้องกันให้กับทุก Account ในองค์กร ด้วยวิธีการยืนยันตัวตนที่หลากหลาย ทำให้แม้รหัสผ่านจะรั่วไหล ผู้โจมตีก็ไม่สามารถเข้าถึงระบบได้',
+                features: [
+                    { icon: '📱', h: 'Authenticator App', p: 'รองรับ Google Authenticator, Microsoft Authenticator และ OTP App ยอดนิยม' },
+                    { icon: '💬', h: 'SMS & Email OTP', p: 'ส่ง OTP ผ่าน SMS หรืออีเมลสำหรับการยืนยันตัวตน' },
+                    { icon: '🔑', h: 'Hardware Token', p: 'รองรับ Hardware Security Key เช่น YubiKey สำหรับความปลอดภัยสูงสุด' },
+                    { icon: '🤖', h: 'Adaptive MFA', p: 'ปรับระดับการยืนยันตัวตนตาม Context เช่น IP, Device, เวลา' },
+                    { icon: '🔗', h: 'SSO Integration', p: 'รวมกับระบบ Single Sign-On และ ActiveDirectory ที่มีอยู่' },
+                    { icon: '📊', h: 'Access Report', p: 'รายงานการเข้าถึงระบบทั้งหมด ตรวจสอบได้ทุกเวลา' },
+                ],
+                benefits: [
+                    { icon: '🛡️', h: 'ป้องกัน Account Takeover', p: 'แม้ Password รั่ว ก็ยังปลอดภัย' },
+                    { icon: '✅', h: 'Zero Trust Ready', p: 'รองรับสถาปัตยกรรม Zero Trust Security' },
+                    { icon: '⚙️', h: 'ติดตั้งง่าย', p: 'Deploy ได้เร็ว รองรับ Cloud และ On-Premise' },
+                    { icon: '📱', h: 'User-Friendly', p: 'ใช้งานง่าย ไม่รบกวน Workflow ปกติ' },
+                ]
+            },
+            'pentest': {
+                icon: '🎯',
+                title: 'Penetration Testing <span>(Pentest)</span>',
+                titlePlain: 'Penetration Testing (Pentest)',
+                tag: 'ทดสอบเจาะระบบ',
+                desc: 'ทดสอบเจาะระบบโดยผู้เชี่ยวชาญเพื่อค้นหาช่องโหว่ก่อนที่แฮกเกอร์จะค้นพบ ด้วยกระบวนการทดสอบมาตรฐานสากลที่ครอบคลุมทุกเลเยอร์',
+                intro: 'ทีม Ethical Hacker ของ SLC ดำเนินการทดสอบเจาะระบบตามมาตรฐาน OWASP, PTES และ CEH เพื่อค้นหาช่องโหว่จริงในระบบขององค์กร พร้อมรายงานและคำแนะนำการแก้ไขที่ชัดเจน',
+                features: [
+                    { icon: '🌐', h: 'Web Application Pentest', p: 'ทดสอบช่องโหว่ Web App ตามมาตรฐาน OWASP Top 10' },
+                    { icon: '🖧', h: 'Network Penetration Test', p: 'ตรวจสอบช่องโหว่ในระบบ Network, Firewall, Router' },
+                    { icon: '📱', h: 'Mobile App Testing', p: 'ทดสอบแอปพลิเคชัน iOS และ Android ตามมาตรฐาน OWASP Mobile' },
+                    { icon: '☁️', h: 'Cloud Security Assessment', p: 'ตรวจสอบการตั้งค่าความปลอดภัยบน AWS, Azure, GCP' },
+                    { icon: '👤', h: 'Social Engineering', p: 'ทดสอบความตระหนักด้านความปลอดภัยของบุคลากร' },
+                    { icon: '📄', h: 'Detailed Report', p: 'รายงาน Executive Summary และ Technical Report พร้อมแนวทางแก้ไข' },
+                ],
+                benefits: [
+                    { icon: '🔍', h: 'ค้นหาช่องโหว่จริง', p: 'รู้ก่อนแฮกเกอร์ ป้องกันได้ทัน' },
+                    { icon: '📋', h: 'รายงานชัดเจน', p: 'แยก Critical/High/Medium/Low พร้อม Fix Guide' },
+                    { icon: '🏆', h: 'ทีมผู้เชี่ยวชาญ', p: 'OSCP, CEH, CISSP Certified' },
+                    { icon: '🔄', h: 'Retest ฟรี', p: 'ทดสอบซ้ำหลังแก้ไขช่องโหว่โดยไม่มีค่าใช้จ่ายเพิ่ม' },
+                ]
+            },
+            'web-security': {
+                icon: '🌐',
+                title: 'Web Security',
+                titlePlain: 'Web Security',
+                tag: 'ความปลอดภัยเว็บแอปพลิเคชัน',
+                desc: 'ปกป้องเว็บแอปพลิเคชันจาก SQL Injection, XSS และการโจมตีรูปแบบอื่นๆ ด้วย Web Application Firewall และการสแกนช่องโหว่แบบเรียลไทม์',
+                intro: 'Web Security ของ SLC ปกป้องเว็บแอปพลิเคชันและ API ขององค์กรจากภัยคุกคามรูปแบบต่างๆ ด้วย WAF ประสิทธิภาพสูง การสแกนช่องโหว่แบบอัตโนมัติ และการตรวจสอบแบบ Real-time',
+                features: [
+                    { icon: '🔥', h: 'Web Application Firewall (WAF)', p: 'กรองและบล็อก Traffic อันตรายก่อนถึง Application ตลอด 24 ชั่วโมง' },
+                    { icon: '🤖', h: 'Bot Protection', p: 'ป้องกัน Bot อันตราย เช่น Scraping, DDoS Bot, Credential Stuffing' },
+                    { icon: '🔍', h: 'Vulnerability Scanning', p: 'สแกนช่องโหว่อัตโนมัติและแจ้งเตือนทันทีเมื่อพบความเสี่ยง' },
+                    { icon: '🌐', h: 'DDoS Protection', p: 'ป้องกัน DDoS Attack ได้ทั้ง Layer 3, 4 และ Layer 7' },
+                    { icon: '🔑', h: 'API Security', p: 'ปกป้อง REST/GraphQL API จากการโจมตีและการเข้าถึงโดยไม่ได้รับอนุญาต' },
+                    { icon: '📊', h: 'Security Dashboard', p: 'ติดตาม Traffic และภัยคุกคามแบบ Real-time ผ่าน Dashboard' },
+                ],
+                benefits: [
+                    { icon: '🛡️', h: 'ปกป้อง 24/7', p: 'WAF ทำงานตลอดเวลา ไม่มี Downtime' },
+                    { icon: '⚡', h: 'ไม่กระทบ Performance', p: 'Latency ต่ำ ไม่ทำให้เว็บช้า' },
+                    { icon: '✅', h: 'ผ่าน PCI-DSS', p: 'รองรับ Compliance สำหรับธุรกิจที่รับชำระเงินออนไลน์' },
+                    { icon: '🔧', h: 'ตั้งค่าง่าย', p: 'Deploy ได้ใน 1 วัน ไม่ต้องเปลี่ยน Infrastructure' },
+                ]
+            },
+            'siem': {
+                icon: '📊',
+                title: 'SIEM',
+                titlePlain: 'SIEM',
+                tag: 'Security Information & Event Management',
+                desc: 'Security Information and Event Management ระบบรวบรวมและวิเคราะห์ข้อมูล Security Log จากทั่วทั้งองค์กร เพื่อตรวจจับภัยคุกคามได้อย่างรวดเร็ว',
+                intro: 'SIEM ของ SLC รวบรวม Log และ Security Event จากทุกระบบในองค์กร มาวิเคราะห์ด้วย AI และ Correlation Rules เพื่อตรวจจับภัยคุกคามที่ซับซ้อนและ Advanced Persistent Threat (APT)',
+                features: [
+                    { icon: '🔗', h: 'Log Aggregation', p: 'รวบรวม Log จากทุก Source: Firewall, Server, Endpoint, Cloud ฯลฯ' },
+                    { icon: '🤖', h: 'AI-driven Detection', p: 'ใช้ Machine Learning ตรวจจับพฤติกรรมผิดปกติ (UEBA)' },
+                    { icon: '⚡', h: 'Real-time Correlation', p: 'เชื่อมโยง Event หลายแหล่งเพื่อตรวจจับ Attack Pattern ซับซ้อน' },
+                    { icon: '🎯', h: 'Threat Intelligence', p: 'รวม Threat Feed จากแหล่งข้อมูลทั่วโลกเพื่อตรวจจับ IOC' },
+                    { icon: '🔔', h: 'Automated Alerting', p: 'แจ้งเตือนอัตโนมัติพร้อม Priority และคำแนะนำการตอบสนอง' },
+                    { icon: '📋', h: 'Compliance Reporting', p: 'รายงาน Compliance อัตโนมัติ รองรับ PDPA, ISO 27001, PCI-DSS' },
+                ],
+                benefits: [
+                    { icon: '⏱️', h: 'ตรวจจับเร็ว', p: 'MTTD ลดลงจากสัปดาห์เป็นนาที' },
+                    { icon: '🔭', h: 'มองเห็นทุกระบบ', p: 'Single Pane of Glass สำหรับ Security' },
+                    { icon: '🤖', h: 'ลด False Positive', p: 'AI ช่วยกรอง Alert ที่ไม่สำคัญออก' },
+                    { icon: '📜', h: 'Audit Ready', p: 'ข้อมูลพร้อมสำหรับการตรวจสอบทุกเมื่อ' },
+                ]
+            },
+            'endpoint': {
+                icon: '🖥️',
+                title: 'Endpoint Security',
+                titlePlain: 'Endpoint Security',
+                tag: 'ปกป้องอุปกรณ์ปลายทาง',
+                desc: 'ปกป้องอุปกรณ์ปลายทาง ไม่ว่าจะเป็น PC, Laptop, Mobile ด้วยระบบ EDR/XDR ที่ใช้ AI ตรวจจับและตอบสนองต่อภัยคุกคามอัตโนมัติ',
+                intro: 'Endpoint Security ของ SLC ปกป้องทุกอุปกรณ์ในองค์กร ตั้งแต่ PC, Laptop, Server จนถึง Mobile Device ด้วย EDR/XDR ประสิทธิภาพสูงที่ใช้ AI ตรวจจับและหยุดภัยคุกคามได้แบบ Real-time',
+                features: [
+                    { icon: '🤖', h: 'AI-based Detection', p: 'ตรวจจับ Malware, Ransomware และ Zero-day Attack ด้วย AI' },
+                    { icon: '🔬', h: 'EDR (Endpoint Detection & Response)', p: 'ตรวจจับ ตอบสนอง และสอบสวนภัยคุกคามบน Endpoint แบบ Real-time' },
+                    { icon: '🌐', h: 'XDR (Extended Detection & Response)', p: 'เชื่อมโยง Endpoint กับ Network, Email, Cloud เพื่อมองเห็น Attack Chain ทั้งหมด' },
+                    { icon: '🔒', h: 'Device Control', p: 'ควบคุมการใช้งาน USB, Bluetooth และ External Device' },
+                    { icon: '🛡️', h: 'Ransomware Protection', p: 'ป้องกันและหยุด Ransomware ก่อนเข้ารหัสข้อมูล' },
+                    { icon: '📊', h: 'Centralized Management', p: 'จัดการ Endpoint ทั้งหมดผ่าน Console เดียว' },
+                ],
+                benefits: [
+                    { icon: '⚡', h: 'หยุดภัยคุกคามเร็ว', p: 'MTTR ลดลงด้วยการตอบสนองอัตโนมัติ' },
+                    { icon: '🌍', h: 'รองรับ Remote Work', p: 'ปกป้อง Endpoint ทุกที่ ไม่จำเป็นต้องอยู่ใน Office' },
+                    { icon: '💡', h: 'Threat Hunting', p: 'ค้นหาภัยคุกคามที่ซ่อนอยู่ในระบบ' },
+                    { icon: '🔧', h: 'จัดการง่าย', p: 'Single Console ดูแลทุก Endpoint ในองค์กร' },
+                ]
+            },
+            'csoc': {
+                icon: '🛡️',
+                title: 'CSOC <span>As a Service</span>',
+                titlePlain: 'CSOC As a Service',
+                tag: 'Cyber Security Operations Center',
+                desc: 'ศูนย์เฝ้าระวังภัยคุกคามทางไซเบอร์แบบ Managed Service ตลอด 24 ชั่วโมง ด้วยทีมผู้เชี่ยวชาญและเทคโนโลยี AI ที่ตรวจจับและตอบสนองต่อภัยคุกคามแบบเรียลไทม์',
+                intro: 'CSOC As a Service ของ SLC ให้บริการเฝ้าระวังภัยคุกคามครบวงจรโดยทีม Analyst ผู้เชี่ยวชาญ 24/7/365 ผ่านเทคโนโลยี SIEM, UEBA และ Threat Intelligence ขั้นสูง โดยไม่ต้องลงทุนสร้าง SOC เอง',
+                features: [
+                    { icon: '👁️', h: '24/7/365 Monitoring', p: 'ทีม Analyst เฝ้าระวังภัยคุกคามตลอด 24 ชั่วโมง 365 วันต่อปี' },
+                    { icon: '🚨', h: 'Incident Response', p: 'ตอบสนองต่อ Incident อย่างรวดเร็วตาม Playbook ที่กำหนดไว้' },
+                    { icon: '🔭', h: 'Threat Hunting', p: 'ค้นหาภัยคุกคามที่ซ่อนอยู่ในระบบด้วย Threat Hunting Proactive' },
+                    { icon: '🌐', h: 'Threat Intelligence', p: 'รับข้อมูล Threat Intelligence จากแหล่งทั่วโลก อัปเดตตลอดเวลา' },
+                    { icon: '📋', h: 'Monthly Report', p: 'รายงานสรุปภัยคุกคาม Incident และแนวโน้มรายเดือนสำหรับผู้บริหาร' },
+                    { icon: '🤝', h: 'Dedicated Analyst', p: 'มี Analyst ที่รับผิดชอบดูแลองค์กรของคุณโดยตรง' },
+                ],
+                benefits: [
+                    { icon: '💰', h: 'ประหยัดกว่าสร้าง SOC เอง', p: 'ไม่ต้องลงทุน Infrastructure และทีม Full-time' },
+                    { icon: '🏆', h: 'ทีมผู้เชี่ยวชาญ', p: 'Tier 1-3 Analyst พร้อมประสบการณ์เฝ้าระวังจริง' },
+                    { icon: '⚡', h: 'พร้อมใช้งานทันที', p: 'เริ่มบริการได้เร็ว ไม่ต้องรอ Build Team' },
+                    { icon: '📈', h: 'Scale ได้ตามความต้องการ', p: 'ปรับขนาดบริการตามการเติบโตขององค์กร' },
+                ]
+            }
+        };
+
+        const ALL_SERVICES = [
+            { id: 'backup-dr', name: 'Backup & DR Solution', icon: '💾' },
+            { id: 'log-solution', name: 'Log Solution', icon: '📋' },
+            { id: 'mfa', name: 'MFA', icon: '🔐' },
+            { id: 'pentest', name: 'Penetration Testing', icon: '🎯' },
+            { id: 'web-security', name: 'Web Security', icon: '🌐' },
+            { id: 'siem', name: 'SIEM', icon: '📊' },
+            { id: 'endpoint', name: 'Endpoint Security', icon: '🖥️' },
+            { id: 'csoc', name: 'CSOC As a Service', icon: '🛡️' },
+        ];
+
+        // ── LOAD DATA ──────────────────────
+        const params = new URLSearchParams(window.location.search);
+        const id = params.get('id') || 'backup-dr';
+        const svc = SERVICES[id] || SERVICES['backup-dr'];
+
+        // Page title
+        document.title = `SLC - ${svc.titlePlain}`;
+
+        // Hero
+        document.getElementById('hero-breadcrumb').textContent = svc.titlePlain;
+        document.getElementById('hero-icon').textContent = svc.icon;
+        document.getElementById('hero-title').innerHTML = svc.title;
+        document.getElementById('hero-desc').textContent = svc.desc;
+
+        // Body
+        document.getElementById('body-tag').textContent = svc.tag;
+        document.getElementById('body-intro').textContent = svc.intro;
+
+        // Features
+        document.getElementById('feature-list').innerHTML = svc.features.map(f => `
+  <li>
+    <span class="fi">${f.icon}</span>
+    <div><h4>${f.h}</h4><p>${f.p}</p></div>
+  </li>
+`).join('');
+
+        // Benefits
+        document.getElementById('benefit-cards').innerHTML = svc.benefits.map(b => `
+  <div class="benefit-card">
+    <div class="bi">${b.icon}</div>
+    <h4>${b.h}</h4>
+    <p>${b.p}</p>
+  </div>
+`).join('');
+
+        // Related services (exclude current)
+        document.getElementById('related-list').innerHTML = ALL_SERVICES
+            .filter(s => s.id !== id)
+            .map(s => `<li><a href="service-detail.html?id=${s.id}"><span>${s.icon}</span> ${s.name} <i class="ri-arrow-right-s-line"></i></a></li>`)
+            .join('');
+
+        // Navbar scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            navbar.classList.toggle('scrolled', window.scrollY > 60);
+            document.getElementById('back-to-top').classList.toggle('visible', window.scrollY > 400);
+        });
+
+        // Hamburger
+        document.getElementById('hamburger').addEventListener('click', function () {
+            this.classList.toggle('open');
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ข่าวสาร Security – SLC</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="js/tailwind.config.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        /* Category badge colors */
+        .cat-แจ้งเตือน {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .cat-ข่าวสาร {
+            background: #f0fdf4;
+            color: #15803d;
+            border: 1px solid #bbf7d0;
+        }
+
+        .cat-บทความ {
+            background: #eff6ff;
+            color: #1d4ed8;
+            border: 1px solid #bfdbfe;
+        }
+
+        .cat-อัปเดต {
+            background: #fefce8;
+            color: #a16207;
+            border: 1px solid #fde68a;
+        }
+
+        .cat-กิจกรรม {
+            background: #f5f3ff;
+            color: #6d28d9;
+            border: 1px solid #ddd6fe;
+        }
+
+        .news-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .news-card {
+            transition: transform .2s, box-shadow .2s;
+        }
+
+        /* Skeleton loader */
+        @keyframes shimmer {
+            0% {
+                background-position: -800px 0
+            }
+
+            100% {
+                background-position: 800px 0
+            }
+        }
+
+        .skeleton {
+            background: linear-gradient(90deg, #e2e8f0 25%, #f1f5f9 50%, #e2e8f0 75%);
+            background-size: 800px 100%;
+            animation: shimmer 1.5s infinite;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body class="font-sans text-gray-800 bg-gray-50 antialiased">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-nav shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="/" class="flex items-center gap-3">
+                    <img src="images/42bc1985-0f80-46b9-84fc-d5f7a5728688.png" alt="SLC Logo"
+                        class="h-10 w-auto object-contain" />
+                    <div>
+                        <span class="font-bold text-2xl text-slc-dark tracking-tight">SLC</span>
+                        <p class="text-[0.6rem] font-medium text-gray-500 uppercase tracking-widest leading-none">
+                            Security Life Cycle</p>
+                    </div>
+                </a>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/#about"
+                        class="text-gray-600 hover:text-slc-accent font-medium transition">เกี่ยวกับเรา</a>
+                    <a href="/#services" class="text-gray-600 hover:text-slc-accent font-medium transition">บริการ</a>
+                    <a href="/#why-us" class="text-gray-600 hover:text-slc-accent font-medium transition">จุดเด่น &
+                        มาตรฐาน</a>
+                    <a href="/news.html"
+                        class="text-slc-accent font-semibold transition border-b-2 border-slc-green pb-0.5">ข่าวสาร</a>
+                    <a href="/#contact"
+                        class="px-5 py-2.5 bg-slc-green text-slc-dark rounded-full font-medium hover:bg-[#8bdc8c] transition shadow-md">ติดต่อเรา</a>
+                </div>
+                <div class="md:hidden">
+                    <button onclick="document.getElementById('mm').classList.toggle('hidden')" class="text-gray-600">
+                        <i class="fa-solid fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div id="mm" class="hidden md:hidden bg-white border-t px-2 pt-2 pb-3 space-y-1">
+            <a href="/" class="block px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md font-medium">หน้าหลัก</a>
+            <a href="/#services"
+                class="block px-3 py-2 text-gray-600 hover:bg-gray-50 rounded-md font-medium">บริการ</a>
+            <a href="/news.html"
+                class="block px-3 py-2 text-slc-accent bg-slc-light rounded-md font-semibold">ข่าวสาร</a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="pt-24 pb-20 min-h-screen">
+        <div id="root" class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+
+            <!-- Loading state -->
+            <div id="view-loading" class="pt-16">
+                <div class="skeleton h-8 w-1/3 mb-6"></div>
+                <div class="skeleton h-64 w-full mb-6"></div>
+                <div class="skeleton h-4 w-full mb-3"></div>
+                <div class="skeleton h-4 w-5/6 mb-3"></div>
+                <div class="skeleton h-4 w-4/6"></div>
+            </div>
+
+            <!-- News list view -->
+            <div id="view-list" class="hidden">
+                <div class="mb-12 text-center">
+                    <span class="inline-block text-slc-accent text-sm font-bold uppercase tracking-widest mb-2">
+                        <i class="fa-solid fa-newspaper mr-1"></i>ข่าวสาร & บทความ
+                    </span>
+                    <h1 class="text-4xl font-bold text-gray-900 mb-4">ข่าวสาร Security จาก SLC</h1>
+                    <p class="text-gray-500 text-lg">ติดตามข่าวสารและบทความด้านความปลอดภัยไซเบอร์ล่าสุด</p>
+                </div>
+
+                <!-- Filter bar -->
+                <div id="filter-bar" class="flex flex-wrap gap-2 mb-8 justify-center"></div>
+
+                <!-- News grid -->
+                <div id="news-grid" class="space-y-6"></div>
+
+                <!-- Empty state -->
+                <div id="list-empty" class="hidden text-center py-20 text-gray-400">
+                    <i class="fa-solid fa-newspaper text-6xl mb-4 block opacity-30"></i>
+                    <p class="text-lg">ยังไม่มีข่าวสารในขณะนี้</p>
+                </div>
+            </div>
+
+            <!-- Single news detail view -->
+            <div id="view-detail" class="hidden">
+                <!-- Back button -->
+                <a href="/news.html"
+                    class="inline-flex items-center gap-2 text-slc-accent hover:text-slc-dark font-medium mb-8 transition group">
+                    <i class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"></i>
+                    กลับไปหน้าข่าวทั้งหมด
+                </a>
+
+                <!-- Article -->
+                <article class="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+                    <!-- Hero image -->
+                    <div id="detail-img-wrap" class="hidden">
+                        <img id="detail-img" src="" alt="" class="w-full h-72 object-cover">
+                    </div>
+
+                    <div class="p-8 md:p-10">
+                        <!-- Meta row -->
+                        <div class="flex flex-wrap items-center gap-3 mb-6">
+                            <span id="detail-category" class="text-xs font-bold px-3 py-1 rounded-full"></span>
+                            <span class="text-gray-400 text-sm" id="detail-date"></span>
+                        </div>
+
+                        <!-- Title -->
+                        <h1 id="detail-title" class="text-3xl md:text-4xl font-bold text-gray-900 leading-tight mb-4">
+                        </h1>
+                        <p id="detail-title-en" class="text-gray-500 text-lg italic mb-8 hidden"></p>
+
+                        <!-- Divider -->
+                        <div class="border-t border-gray-100 mb-8"></div>
+
+                        <!-- Body -->
+                        <div id="detail-body"
+                            class="prose prose-lg max-w-none text-gray-700 leading-relaxed whitespace-pre-wrap"></div>
+                        <div id="detail-body-en" class="mt-8 p-6 bg-gray-50 rounded-xl border border-gray-100 hidden">
+                            <p class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">English Summary</p>
+                            <p id="detail-body-en-text" class="text-gray-600 leading-relaxed"></p>
+                        </div>
+
+                        <!-- External link -->
+                        <div id="detail-link-wrap" class="mt-8 hidden">
+                            <a id="detail-link" href="#" target="_blank" rel="noopener noreferrer"
+                                class="inline-flex items-center gap-2 px-6 py-3 bg-slc-green text-slc-dark font-semibold rounded-full hover:bg-[#8bdc8c] transition shadow-md">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                อ่านบทความฉบับเต็ม
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- More news -->
+                <section class="mt-16">
+                    <h2 class="text-xl font-bold text-gray-900 mb-6">ข่าวสารอื่น ๆ</h2>
+                    <div id="more-news" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+                </section>
+            </div>
+
+            <!-- Error view -->
+            <div id="view-error" class="hidden text-center py-20">
+                <i class="fa-solid fa-circle-exclamation text-6xl text-red-400 mb-4 block"></i>
+                <h2 class="text-2xl font-bold text-gray-800 mb-2">ไม่พบข่าวสารที่ต้องการ</h2>
+                <p class="text-gray-500 mb-8">ข่าวนี้อาจถูกลบออกไปแล้ว หรือยังไม่เผยแพร่</p>
+                <a href="/news.html"
+                    class="px-6 py-3 bg-slc-green text-slc-dark font-semibold rounded-full hover:bg-[#8bdc8c] transition">
+                    ดูข่าวสารทั้งหมด
+                </a>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-10 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 text-center text-sm">
+            <p>&copy; 2025 Security Life Cycle (SLC) Co., Ltd. All rights reserved.</p>
+            <p class="mt-2"><a href="/" class="hover:text-white transition">หน้าหลัก</a> &nbsp;|&nbsp;
+                <a href="/#contact" class="hover:text-white transition">ติดต่อเรา</a>
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        const CATS = { 'แจ้งเตือน': 'cat-แจ้งเตือน', 'ข่าวสาร': 'cat-ข่าวสาร', 'บทความ': 'cat-บทความ', 'อัปเดต': 'cat-อัปเดต', 'กิจกรรม': 'cat-กิจกรรม' };
+        const CAT_ICONS = { 'แจ้งเตือน': '🔔', 'ข่าวสาร': '📰', 'บทความ': '📝', 'อัปเดต': '🔄', 'กิจกรรม': '📅' };
+
+        function esc(s) {
+            return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+        }
+
+        function fmtDate(d) {
+            if (!d) return '';
+            const dt = new Date(d);
+            return dt.toLocaleDateString('th-TH', { year: 'numeric', month: 'long', day: 'numeric' });
+        }
+
+        function show(id) { document.getElementById(id).classList.remove('hidden'); }
+        function hide(id) { document.getElementById(id).classList.add('hidden'); }
+
+        function newsCardHTML(n) {
+            const catClass = CATS[n.category] || '';
+            const icon = CAT_ICONS[n.category] || '📄';
+            const bodySnippet = (n.body_th || '').substring(0, 160) + ((n.body_th || '').length > 160 ? '…' : '');
+            return `
+        <a href="/news.html?id=${n.id}" class="news-card block bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md overflow-hidden group">
+          ${n.img_url ? `<img src="${esc(n.img_url)}" alt="${esc(n.title_th)}" class="w-full h-48 object-cover">` : ''}
+          <div class="p-6">
+            <div class="flex items-center gap-3 mb-4">
+              <span class="text-xs font-bold px-3 py-1 rounded-full ${catClass}">${icon} ${esc(n.category)}</span>
+              <span class="text-gray-400 text-xs">${fmtDate(n.created_at)}</span>
+            </div>
+            <h3 class="text-xl font-bold text-gray-900 group-hover:text-slc-accent transition leading-snug mb-3">${esc(n.title_th)}</h3>
+            ${n.title_en ? `<p class="text-gray-400 text-sm italic mb-3">${esc(n.title_en)}</p>` : ''}
+            ${bodySnippet ? `<p class="text-gray-600 text-sm leading-relaxed">${esc(bodySnippet)}</p>` : ''}
+            <div class="mt-4 inline-flex items-center gap-1 text-slc-accent text-sm font-semibold group-hover:gap-2 transition-all">
+              อ่านต่อ <i class="fa-solid fa-arrow-right text-xs"></i>
+            </div>
+          </div>
+        </a>`;
+        }
+
+        async function loadList() {
+            try {
+                const r = await fetch('/api/news');
+                const { data: news } = await r.json();
+                hide('view-loading');
+                show('view-list');
+
+                if (!news || !news.length) { show('list-empty'); return; }
+
+                // Render filter chips
+                const cats = [...new Set(news.map(n => n.category))];
+                const filterBar = document.getElementById('filter-bar');
+                filterBar.innerHTML = `<button class="filter-btn active-filter px-4 py-1.5 rounded-full text-sm font-semibold bg-slc-green text-slc-dark transition" onclick="filterNews(this,'')">ทั้งหมด</button>`
+                    + cats.map(c => `<button class="filter-btn px-4 py-1.5 rounded-full text-sm font-semibold bg-gray-100 text-gray-600 hover:bg-gray-200 transition" onclick="filterNews(this,'${esc(c)}')">${CAT_ICONS[c] || ''} ${esc(c)}</button>`).join('');
+
+                // Render cards
+                const grid = document.getElementById('news-grid');
+                grid.innerHTML = news.map(n => newsCardHTML(n)).join('');
+                grid.dataset.all = JSON.stringify(news);
+
+                document.title = 'ข่าวสาร Security — SLC';
+            } catch (e) {
+                hide('view-loading');
+                show('view-error');
+            }
+        }
+
+        function filterNews(btn, cat) {
+            document.querySelectorAll('.filter-btn').forEach(b => {
+                b.classList.remove('active-filter', 'bg-slc-green', 'text-slc-dark');
+                b.classList.add('bg-gray-100', 'text-gray-600');
+            });
+            btn.classList.add('active-filter', 'bg-slc-green', 'text-slc-dark');
+            btn.classList.remove('bg-gray-100', 'text-gray-600');
+
+            const all = JSON.parse(document.getElementById('news-grid').dataset.all || '[]');
+            const filtered = cat ? all.filter(n => n.category === cat) : all;
+            document.getElementById('news-grid').innerHTML = filtered.map(n => newsCardHTML(n)).join('');
+        }
+
+        async function loadDetail(id) {
+            try {
+                const r = await fetch(`/api/news/${id}`);
+                if (!r.ok) throw new Error('not found');
+                const n = await r.json();
+
+                hide('view-loading');
+                show('view-detail');
+
+                // Set page title
+                document.title = (n.title_th || 'ข่าวสาร') + ' — SLC';
+
+                // Hero image
+                if (n.img_url) {
+                    document.getElementById('detail-img').src = n.img_url;
+                    document.getElementById('detail-img').alt = n.title_th || '';
+                    show('detail-img-wrap');
+                }
+
+                // Category badge
+                const catEl = document.getElementById('detail-category');
+                catEl.textContent = (CAT_ICONS[n.category] || '') + ' ' + (n.category || '');
+                catEl.className = `text-xs font-bold px-3 py-1 rounded-full ${CATS[n.category] || 'bg-gray-100 text-gray-600'}`;
+
+                // Date
+                document.getElementById('detail-date').textContent = fmtDate(n.created_at);
+
+                // Titles
+                document.getElementById('detail-title').textContent = n.title_th || '';
+                const enTitleEl = document.getElementById('detail-title-en');
+                if (n.title_en) { enTitleEl.textContent = n.title_en; enTitleEl.classList.remove('hidden'); }
+
+                // Body
+                document.getElementById('detail-body').textContent = n.body_th || '';
+                const enBodyEl = document.getElementById('detail-body-en');
+                if (n.body_en) {
+                    document.getElementById('detail-body-en-text').textContent = n.body_en;
+                    enBodyEl.classList.remove('hidden');
+                }
+
+                // External link
+                if (n.link_url) {
+                    const lw = document.getElementById('detail-link-wrap');
+                    document.getElementById('detail-link').href = n.link_url;
+                    lw.classList.remove('hidden');
+                }
+
+                // Load more news (exclude current)
+                loadMoreNews(id);
+
+            } catch (e) {
+                hide('view-loading');
+                show('view-error');
+            }
+        }
+
+        async function loadMoreNews(currentId) {
+            try {
+                const r = await fetch('/api/news');
+                const { data: news } = await r.json();
+                const others = (news || []).filter(n => n.id !== Number(currentId)).slice(0, 4);
+                if (!others.length) { document.querySelector('#view-detail section')?.remove(); return; }
+                document.getElementById('more-news').innerHTML = others.map(n => newsCardHTML(n)).join('');
+            } catch { }
+        }
+
+        // Route based on ?id= param
+        const params = new URLSearchParams(window.location.search);
+        const newsId = params.get('id');
+        if (newsId && /^\d+$/.test(newsId)) {
+            loadDetail(newsId);
+        } else {
+            loadList();
+        }
+    </script>
+</body>
+
+</html>

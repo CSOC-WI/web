@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Life Cycle (SLC) - ผู้ให้บริการ Cyber Security ครบวงจร</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Tailwind config (external for CSP compliance) -->
+  <script src="js/tailwind.config.js"></script>
+  <!-- Google Fonts: Prompt -->
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- FontAwesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    .glass-nav {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .hero-pattern {
+      background-image: linear-gradient(rgba(15, 41, 30, 0.85), rgba(15, 23, 42, 0.9)), url('https://images.unsplash.com/photo-1550751827-4bd374c3f58b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');
+      background-size: cover;
+      background-position: center;
+      background-attachment: fixed;
+    }
+
+    .service-card:hover .service-icon {
+      transform: scale(1.1);
+      color: #6bce6d;
+    }
+
+    .modal-open {
+      overflow: hidden;
+    }
+
+    .modal-content p {
+      margin-bottom: 1rem;
+    }
+
+    .modal-content ul {
+      list-style-type: disc;
+      margin-left: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .modal-content li {
+      margin-bottom: 0.5rem;
+    }
+  </style>
+</head>
+
+<body class="font-sans text-gray-800 bg-gray-50 antialiased selection:bg-slc-green selection:text-slc-dark">
+
+  <!-- Navbar -->
+  <nav class="fixed w-full z-50 glass-nav transition-all duration-300 shadow-sm" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex justify-between items-center h-20">
+        <!-- Logo -->
+        <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+          <img src="images/42bc1985-0f80-46b9-84fc-d5f7a5728688.png" alt="SLC Logo"
+            class="h-10 w-auto object-contain" />
+          <div>
+            <span class="font-bold text-2xl text-slc-dark tracking-tight">SLC</span>
+            <p class="text-[0.6rem] font-medium text-gray-500 uppercase tracking-widest leading-none">Security Life
+              Cycle</p>
+          </div>
+        </div>
+
+        <!-- Desktop Menu -->
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="#about" class="text-gray-600 hover:text-slc-accent font-medium transition">เกี่ยวกับเรา</a>
+          <a href="#services" class="text-gray-600 hover:text-slc-accent font-medium transition">บริการ</a>
+          <a href="#why-us" class="text-gray-600 hover:text-slc-accent font-medium transition">จุดเด่น & มาตรฐาน</a>
+          <a href="#contact"
+            class="px-5 py-2.5 bg-slc-green text-slc-dark rounded-full font-medium hover:bg-[#8bdc8c] transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5">ติดต่อเรา</a>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="md:hidden flex items-center">
+          <button class="text-gray-600 hover:text-slc-accent focus:outline-none"
+            onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+            <i class="fa-solid fa-bars text-2xl"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white border-t">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a href="#about"
+          class="block px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-slc-accent rounded-md font-medium">เกี่ยวกับเรา</a>
+        <a href="#services"
+          class="block px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-slc-accent rounded-md font-medium">บริการ</a>
+        <a href="#why-us"
+          class="block px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-slc-accent rounded-md font-medium">จุดเด่น &
+          มาตรฐาน</a>
+        <a href="#contact"
+          class="block px-3 py-2 text-slc-dark bg-slc-green hover:bg-[#8bdc8c] rounded-md font-medium mt-2">ติดต่อเรา</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ── Security News Ticker ── -->
+  <div id="news-ticker-wrap" style="
+    position:fixed; top:80px; left:0; right:0; z-index:49;
+    background:linear-gradient(90deg,#0a1f12 0%,#0f2919 100%);
+    border-bottom:1px solid rgba(163,233,164,.18);
+    height:36px; display:flex; align-items:center; overflow:hidden;
+    box-shadow:0 2px 12px rgba(0,0,0,.3);
+  ">
+    <!-- Label -->
+    <div style="
+      flex-shrink:0; display:flex; align-items:center; gap:6px;
+      padding:0 14px 0 16px; height:100%;
+      background:linear-gradient(90deg,#1b5e20,#2e7d32);
+      border-right:1px solid rgba(163,233,164,.25);
+      font-size:.72rem; font-weight:700; letter-spacing:.06em;
+      color:#a3e9a4; white-space:nowrap; font-family:'Prompt',sans-serif;
+    ">
+      <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+        <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" />
+        <path d="M13.73 21a2 2 0 0 1-3.46 0" />
+      </svg>
+      ข่าว Security
+    </div>
+    <!-- Ticker track -->
+    <div style="flex:1; overflow:hidden; position:relative; height:100%;">
+      <div id="news-ticker-track" style="
+        display:flex; align-items:center; height:100%;
+        white-space:nowrap; will-change:transform;
+        animation: tickerScroll 40s linear infinite;
+        font-family:'Prompt',sans-serif; font-size:.75rem; color:#c8e6c9;
+      ">
+        <span id="news-ticker-items" style="display:inline-flex; align-items:center; gap:0;">
+          <span style="color:#4caf50; padding:0 16px;">⬤</span>
+          <span style="color:#b0bec5; font-style:italic;">กำลังโหลดข่าวสาร...</span>
+        </span>
+        <!-- Duplicate for seamless loop (filled by JS) -->
+        <span id="news-ticker-clone" aria-hidden="true"></span>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    @keyframes tickerScroll {
+      0% {
+        transform: translateX(0);
+      }
+
+      100% {
+        transform: translateX(-50%);
+      }
+    }
+
+    #news-ticker-wrap:hover #news-ticker-track {
+      animation-play-state: paused;
+    }
+
+    /* Push hero section down to account for both navbar (80px) + ticker (36px) */
+    body {
+      padding-top: 116px;
+    }
+
+    #navbar {
+      top: 0;
+    }
+  </style>
+
+  <script>
+    // Load news from API and populate ticker
+    (async function loadNewsTicker() {
+      const itemsEl = document.getElementById('news-ticker-items');
+      const cloneEl = document.getElementById('news-ticker-clone');
+      try {
+        const r = await fetch('/api/news');
+        const { data } = await r.json();
+        if (!data || !data.length) {
+          itemsEl.innerHTML = '<span style="color:#4caf50;padding:0 16px;">⬤</span><span style="color:#b0bec5;font-style:italic;">ไม่มีข่าวสารในขณะนี้</span>';
+          cloneEl.innerHTML = itemsEl.innerHTML;
+          return;
+        }
+        const cats = { 'แจ้งเตือน': '#ef5350', 'ข่าวสาร': '#66bb6a', 'บทความ': '#42a5f5', 'อัปเดต': '#ffca28', 'กิจกรรม': '#ab47bc' };
+        const html = data.map(n => {
+          const col = cats[n.category] || '#66bb6a';
+          const title = (n.title_th || '').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+          return `<a href="/news.html?id=${n.id}" style="display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:inherit;padding:0 6px;">
+            <span style="color:${col};font-size:.55rem;">&#x2B24;</span>
+            <span style="color:#f5f5f5;font-weight:500;">[${n.category}]</span>
+            <span style="color:#e0e0e0;">${title}</span>
+          </a><span style="color:rgba(163,233,164,.3);padding:0 20px;">|</span>`;
+        }).join('');
+        itemsEl.innerHTML = html;
+        cloneEl.innerHTML = html; // duplicate for seamless loop
+        // Adjust animation duration based on content width
+        const track = document.getElementById('news-ticker-track');
+        const totalW = itemsEl.scrollWidth;
+        const duration = Math.max(20, totalW / 80);
+        track.style.animationDuration = duration + 's';
+      } catch (e) {
+        itemsEl.innerHTML = '<span style="color:#4caf50;padding:0 16px;">⬤</span><span style="color:#b0bec5;font-style:italic;">ไม่สามารถโหลดข่าวสารได้</span>';
+        cloneEl.innerHTML = itemsEl.innerHTML;
+      }
+    })();
+  </script>
+
+  <!-- Hero Section -->
+  <header class="relative pt-32 pb-20 lg:pt-48 lg:pb-32 hero-pattern">
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+      <span
+        class="inline-block py-1 px-3 rounded-full bg-slc-green/20 text-slc-green border border-slc-green/30 font-medium text-sm mb-6 backdrop-blur-sm">
+        <i class="fa-solid fa-building-shield mr-2"></i>บริษัทในเครือ INET
+      </span>
+      <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+        ผู้ให้บริการ <span class="text-transparent bg-clip-text bg-gradient-to-r from-slc-green to-white">Cyber
+          Security</span> ครบวงจร
+      </h1>
+      <p class="mt-4 text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto font-light leading-relaxed">
+        มุ่งเน้นการรักษาความปลอดภัย ตั้งแต่การประเมินความเสี่ยง ป้องกัน ตรวจจับ ตอบสนองต่อภัยคุกคาม
+        ไปจนถึงการฟื้นฟูเพื่อให้ระบบขององค์กรปลอดภัยสูงสุด
+      </p>
+      <div class="mt-10 flex justify-center gap-4 flex-col sm:flex-row">
+        <a href="#services"
+          class="px-8 py-4 bg-slc-green hover:bg-[#8bdc8c] text-slc-dark rounded-full font-bold text-lg transition shadow-[0_0_20px_rgba(163,233,164,0.4)] flex items-center justify-center">
+          ดูบริการของเรา <i class="fa-solid fa-arrow-right ml-2"></i>
+        </a>
+        <a href="#contact"
+          class="px-8 py-4 bg-white/10 hover:bg-white/20 text-white border border-white/30 rounded-full font-medium text-lg backdrop-blur-sm transition flex items-center justify-center">
+          ปรึกษาผู้เชี่ยวชาญ
+        </a>
+      </div>
+    </div>
+
+    <!-- Wave shape divider -->
+    <div class="absolute bottom-0 left-0 w-full overflow-hidden leading-none">
+      <svg class="relative block w-full h-[50px] md:h-[100px]" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path
+          d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V120H0V95.8C59.71,118.08,130.83,123.15,191.56,108.22,239.53,96.38,280.9,74.26,321.39,56.44Z"
+          fill="#f9fafb"></path>
+      </svg>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section id="about" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="lg:grid lg:grid-cols-2 lg:gap-16 items-center">
+        <div class="mb-10 lg:mb-0 relative">
+          <div
+            class="absolute inset-0 bg-gradient-to-tr from-slc-green to-[#6bce6d] rounded-2xl transform translate-x-4 translate-y-4 opacity-30">
+          </div>
+          <img class="relative rounded-2xl shadow-xl w-full object-cover h-[400px]"
+            src="https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+            alt="ทีมงาน Cyber Security">
+        </div>
+        <div>
+          <h2 class="text-sm font-bold text-slc-accent uppercase tracking-wider mb-2">เกี่ยวกับเรา</h2>
+          <h3 class="text-3xl font-bold text-gray-900 mb-6">บริษัท Security Life Cycle (SLC)</h3>
+          <p class="text-lg text-gray-600 mb-6 leading-relaxed">
+            เราคือผู้ให้บริการ <strong class="text-slc-accent">Cyber Security ครบวงจร</strong> และเป็นบริษัทในเครือ
+            <strong class="text-gray-900">INET</strong> ที่มุ่งเน้นการดูแลกลุ่มลูกค้าอย่างใกล้ชิด
+          </p>
+          <p class="text-gray-600 mb-8 leading-relaxed">
+            เป้าหมายของเราคือการให้บริการด้านความปลอดภัยทางไซเบอร์แบบ End-to-End ครอบคลุมตั้งแต่การประเมินความเสี่ยง
+            การป้องกันระบบ การตรวจจับความผิดปกติ และการตอบสนองต่อภัยคุกคาม ตลอดจนการฟื้นฟูและพัฒนาระบบ
+            เพื่อให้องค์กรของคุณมีความปลอดภัยสูงสุดและดำเนินธุรกิจได้อย่างต่อเนื่องในยุคดิจิทัล
+          </p>
+          <div class="grid grid-cols-2 gap-6">
+            <div class="border-l-4 border-slc-green pl-4">
+              <h4 class="text-2xl font-bold text-gray-900">24/7</h4>
+              <p class="text-sm text-gray-500">การเฝ้าระวังอย่างต่อเนื่อง</p>
+            </div>
+            <div class="border-l-4 border-[#6bce6d] pl-4">
+              <h4 class="text-2xl font-bold text-gray-900">100%</h4>
+              <p class="text-sm text-gray-500">ความมุ่งมั่นในการปกป้องข้อมูล</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services Section -->
+  <section id="services" class="py-20 bg-white">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-sm font-bold text-slc-accent uppercase tracking-wider mb-2">บริการของเรา</h2>
+        <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">บริการ Cyber Security แบบครบวงจร</h3>
+        <p class="text-gray-600 text-lg">ครอบคลุมทุกมิติของการรักษาความมั่นคงปลอดภัย
+          เพื่อปกป้องธุรกิจของคุณจากทุกภัยคุกคามทางไซเบอร์</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8" id="services-grid">
+        <!-- บริการจะถูกสร้างด้วย JavaScript -->
+      </div>
+    </div>
+  </section>
+
+  <!-- Why Choose Us & Certifications -->
+  <section id="why-us" class="py-20 bg-gray-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-sm font-bold text-slc-accent uppercase tracking-wider mb-2">จุดเด่นและมาตรฐาน</h2>
+        <h3 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">ทำไมต้องเลือก SLC</h3>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+          <div class="w-12 h-12 bg-slc-light text-slc-accent rounded-lg flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-certificate"></i>
+          </div>
+          <h4 class="font-bold text-lg mb-2 text-gray-900">รับรองความปลอดภัย</h4>
+          <p class="text-sm text-gray-600">ได้รับการรับรอง CSA STAR Certification และมาตรฐานสากล ISO/IEC 27001:2022
+            ด้านความมั่นคงปลอดภัย</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+          <div class="w-12 h-12 bg-slc-light text-slc-accent rounded-lg flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-globe"></i>
+          </div>
+          <h4 class="font-bold text-lg mb-2 text-gray-900">มาตรฐานระดับสากล</h4>
+          <p class="text-sm text-gray-600">ได้รับการรับรองคุณภาพการให้บริการ (SMS) ตามมาตรฐานสากล ISO/IEC 20000-1:2018
+          </p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+          <div class="w-12 h-12 bg-slc-light text-slc-accent rounded-lg flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-arrow-trend-up"></i>
+          </div>
+          <h4 class="font-bold text-lg mb-2 text-gray-900">พัฒนาอย่างต่อเนื่อง</h4>
+          <p class="text-sm text-gray-600">ติดตามและอัปเดตข่าวสารเกี่ยวกับภัยคุกคามทางไซเบอร์
+            พร้อมวิธีรับมือเพื่อลดความเสียหายแก่องค์กรให้เหลือน้อยที่สุด</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+          <div class="w-12 h-12 bg-slc-light text-slc-accent rounded-lg flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-handshake"></i>
+          </div>
+          <h4 class="font-bold text-lg mb-2 text-gray-900">เชื่อถือได้</h4>
+          <p class="text-sm text-gray-600">เพิ่มความเชื่อมั่นในด้านความปลอดภัยของข้อมูล
+            ลดความเสี่ยงจากการถูกขโมยหรือโจมตีจากผู้ไม่หวังดี</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+          <div class="w-12 h-12 bg-slc-light text-slc-accent rounded-lg flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-bolt"></i>
+          </div>
+          <h4 class="font-bold text-lg mb-2 text-gray-900">รวดเร็ว</h4>
+          <p class="text-sm text-gray-600">ตอบสนองต่อเหตุการณ์ภัยคุกคามอย่างรวดเร็วและทันท่วงที
+            เพื่อป้องกันการหยุดชะงักของระบบ</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+          <div class="w-12 h-12 bg-slc-light text-slc-accent rounded-lg flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-coins"></i>
+          </div>
+          <h4 class="font-bold text-lg mb-2 text-gray-900">ลดค่าใช้จ่าย</h4>
+          <p class="text-sm text-gray-600">ทางเลือกที่ยืดหยุ่น คิดค่าบริการแบบ Pay per use เหมาะกับองค์กรที่ต้องการระบบ
+            IT ที่ใช้งานง่าย</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+          <div class="w-12 h-12 bg-slc-light text-slc-accent rounded-lg flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-shield-virus"></i>
+          </div>
+          <h4 class="font-bold text-lg mb-2 text-gray-900">ปลอดภัย 24 ชม.</h4>
+          <p class="text-sm text-gray-600">มีการสังเกตการณ์และเฝ้าระวังเหตุการณ์ต่างๆ จากภัยคุกคามทางไซเบอร์ตลอด 24
+            ชั่วโมง</p>
+        </div>
+        <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100 hover:shadow-md transition">
+          <div class="w-12 h-12 bg-slc-light text-slc-accent rounded-lg flex items-center justify-center text-xl mb-4">
+            <i class="fa-solid fa-layer-group"></i>
+          </div>
+          <h4 class="font-bold text-lg mb-2 text-gray-900">บริการที่หลากหลาย</h4>
+          <p class="text-sm text-gray-600">ควบคุมตั้งแต่วิเคราะห์ความเสี่ยง กำหนดแนวทางป้องกัน ดำเนินการ
+            ไปจนถึงตรวจสอบปรับปรุงระบบ</p>
+        </div>
+      </div>
+
+      <!-- Certifications -->
+      <div class="space-y-8">
+
+        <!-- Organizational Certs -->
+        <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200">
+          <div class="text-center mb-8">
+            <h4 class="text-2xl font-bold text-gray-900">การรับรองคุณภาพและความน่าเชื่อถือ</h4>
+            <p class="text-gray-500 mt-2">ให้บริการภายใต้มาตรฐานสากล</p>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div
+              class="flex gap-4 items-start p-5 rounded-xl border border-gray-100 hover:border-slc-green hover:shadow-md transition">
+              <div
+                class="w-14 h-14 flex-shrink-0 bg-slc-light rounded-xl flex items-center justify-center text-2xl text-slc-accent">
+                <i class="fa-solid fa-shield-check"></i>
+              </div>
+              <div>
+                <p class="font-bold text-gray-900">ISO/IEC 27001:2022</p>
+                <p class="text-xs font-semibold text-slc-accent mb-1">Information Security Management</p>
+                <p class="text-xs text-gray-500 leading-relaxed">
+                  มาตรฐานสากลด้านระบบบริหารจัดการความมั่นคงปลอดภัยสารสนเทศ (ISMS)
+                  ครอบคลุมการปกป้องข้อมูลจากภัยคุกคามทุกรูปแบบ</p>
+              </div>
+            </div>
+            <div
+              class="flex gap-4 items-start p-5 rounded-xl border border-gray-100 hover:border-slc-green hover:shadow-md transition">
+              <div
+                class="w-14 h-14 flex-shrink-0 bg-slc-light rounded-xl flex items-center justify-center text-2xl text-slc-accent">
+                <i class="fa-solid fa-list-check"></i>
+              </div>
+              <div>
+                <p class="font-bold text-gray-900">ISO/IEC 20000-1:2018</p>
+                <p class="text-xs font-semibold text-slc-accent mb-1">Service Management System</p>
+                <p class="text-xs text-gray-500 leading-relaxed">มาตรฐานสากลด้านระบบบริหารจัดการบริการ IT (SMS)
+                  รับรองคุณภาพการให้บริการที่สม่ำเสมอและมีประสิทธิภาพ</p>
+              </div>
+            </div>
+            <div
+              class="flex gap-4 items-start p-5 rounded-xl border border-gray-100 hover:border-slc-green hover:shadow-md transition">
+              <div
+                class="w-14 h-14 flex-shrink-0 bg-slc-light rounded-xl flex items-center justify-center text-2xl text-slc-accent">
+                <i class="fa-solid fa-cloud"></i>
+              </div>
+              <div>
+                <p class="font-bold text-gray-900">CSA STAR Certification</p>
+                <p class="text-xs font-semibold text-slc-accent mb-1">Cloud Security Alliance</p>
+                <p class="text-xs text-gray-500 leading-relaxed">การรับรองความปลอดภัยบนคลาวด์จาก Cloud Security Alliance
+                  ครอบคลุมหลักการ Transparency, Auditability และ Continuous Improvement</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Team / Personnel Certifications -->
+        <div class="bg-white rounded-2xl p-8 shadow-sm border border-gray-200">
+          <div class="text-center mb-8">
+            <h4 class="text-2xl font-bold text-gray-900">ใบรับรองความเชี่ยวชาญของทีมงาน</h4>
+            <p class="text-gray-500 mt-2">ทีมผู้เชี่ยวชาญของเราได้รับการรับรองจากสถาบันชั้นนำระดับโลก</p>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
+
+            <!-- CompTIA Security+ -->
+            <div
+              class="group flex flex-col items-center p-4 rounded-xl border border-gray-100 hover:border-red-200 hover:shadow-md transition text-center">
+              <div
+                class="w-14 h-14 rounded-full border-4 border-gray-200 group-hover:border-red-400 flex items-center justify-center mb-3 transition">
+                <span class="text-xs font-black text-red-600 leading-none">Sec+</span>
+              </div>
+              <p class="font-bold text-sm text-gray-800">CompTIA Security+</p>
+              <p class="text-xs text-gray-400 mt-1">Foundation Security</p>
+              <span class="mt-2 text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full font-medium">CompTIA</span>
+            </div>
+
+            <!-- CompTIA CASP+ -->
+            <div
+              class="group flex flex-col items-center p-4 rounded-xl border border-gray-100 hover:border-red-200 hover:shadow-md transition text-center">
+              <div
+                class="w-14 h-14 rounded-full border-4 border-gray-200 group-hover:border-red-400 flex items-center justify-center mb-3 transition">
+                <span class="text-xs font-black text-red-600 leading-none">CASP+</span>
+              </div>
+              <p class="font-bold text-sm text-gray-800">CompTIA CASP+</p>
+              <p class="text-xs text-gray-400 mt-1">Advanced Security</p>
+              <span class="mt-2 text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full font-medium">CompTIA</span>
+            </div>
+
+            <!-- CompTIA PenTest+ -->
+            <div
+              class="group flex flex-col items-center p-4 rounded-xl border border-gray-100 hover:border-red-200 hover:shadow-md transition text-center">
+              <div
+                class="w-14 h-14 rounded-full border-4 border-gray-200 group-hover:border-red-400 flex items-center justify-center mb-3 transition">
+                <span class="text-xs font-black text-red-600 leading-none">Pen+</span>
+              </div>
+              <p class="font-bold text-sm text-gray-800">CompTIA PenTest+</p>
+              <p class="text-xs text-gray-400 mt-1">Penetration Testing</p>
+              <span class="mt-2 text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full font-medium">CompTIA</span>
+            </div>
+
+            <!-- CompTIA CySA+ -->
+            <div
+              class="group flex flex-col items-center p-4 rounded-xl border border-gray-100 hover:border-red-200 hover:shadow-md transition text-center">
+              <div
+                class="w-14 h-14 rounded-full border-4 border-gray-200 group-hover:border-red-400 flex items-center justify-center mb-3 transition">
+                <span class="text-xs font-black text-red-600 leading-none">CySA+</span>
+              </div>
+              <p class="font-bold text-sm text-gray-800">CompTIA CySA+</p>
+              <p class="text-xs text-gray-400 mt-1">Security Analytics</p>
+              <span class="mt-2 text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full font-medium">CompTIA</span>
+            </div>
+
+            <!-- CompTIA Project+ -->
+            <div
+              class="group flex flex-col items-center p-4 rounded-xl border border-gray-100 hover:border-red-200 hover:shadow-md transition text-center">
+              <div
+                class="w-14 h-14 rounded-full border-4 border-gray-200 group-hover:border-red-400 flex items-center justify-center mb-3 transition">
+                <span class="text-xs font-black text-red-600 leading-none">Proj+</span>
+              </div>
+              <p class="font-bold text-sm text-gray-800">CompTIA Project+</p>
+              <p class="text-xs text-gray-400 mt-1">IT Project Management</p>
+              <span class="mt-2 text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full font-medium">CompTIA</span>
+            </div>
+
+            <!-- CHFI -->
+            <div
+              class="group flex flex-col items-center p-4 rounded-xl border border-gray-100 hover:border-gray-400 hover:shadow-md transition text-center">
+              <div
+                class="w-14 h-14 rounded-lg border-2 border-gray-300 group-hover:border-gray-500 flex items-center justify-center mb-3 transition bg-gray-50">
+                <span class="text-sm font-black text-gray-700 leading-none">CHFI</span>
+              </div>
+              <p class="font-bold text-sm text-gray-800">CHFI</p>
+              <p class="text-xs text-gray-400 mt-1">Computer Hacking Forensic Investigator</p>
+              <span
+                class="mt-2 text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full font-medium">EC-Council</span>
+            </div>
+
+            <!-- CEH -->
+            <div
+              class="group flex flex-col items-center p-4 rounded-xl border border-gray-100 hover:border-gray-400 hover:shadow-md transition text-center">
+              <div
+                class="w-14 h-14 rounded-lg border-2 border-gray-300 group-hover:border-gray-500 flex items-center justify-center mb-3 transition bg-gray-50">
+                <span class="text-sm font-black text-gray-700 leading-none">CEH</span>
+              </div>
+              <p class="font-bold text-sm text-gray-800">CEH</p>
+              <p class="text-xs text-gray-400 mt-1">Certified Ethical Hacking</p>
+              <span
+                class="mt-2 text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full font-medium">EC-Council</span>
+            </div>
+
+            <!-- ECSS -->
+            <div
+              class="group flex flex-col items-center p-4 rounded-xl border border-gray-100 hover:border-gray-400 hover:shadow-md transition text-center">
+              <div
+                class="w-14 h-14 rounded-lg border-2 border-gray-300 group-hover:border-gray-500 flex items-center justify-center mb-3 transition bg-gray-50">
+                <span class="text-xs font-black text-gray-700 leading-none">ECSS</span>
+              </div>
+              <p class="font-bold text-sm text-gray-800">ECSS</p>
+              <p class="text-xs text-gray-400 mt-1">EC-Council Certified Security Specialist</p>
+              <span
+                class="mt-2 text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded-full font-medium">EC-Council</span>
+            </div>
+
+            <!-- CISA -->
+            <div
+              class="group flex flex-col items-center p-4 rounded-xl border border-gray-100 hover:border-red-200 hover:shadow-md transition text-center">
+              <div
+                class="w-14 h-14 rounded-full border-4 border-red-400 group-hover:border-red-500 flex items-center justify-center mb-3 transition">
+                <span class="text-xs font-black text-red-600 leading-none">CISA</span>
+              </div>
+              <p class="font-bold text-sm text-gray-800">CISA</p>
+              <p class="text-xs text-gray-400 mt-1">Certified Information Systems Auditor</p>
+              <span class="mt-2 text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full font-medium">ISACA</span>
+            </div>
+
+            <!-- CISM -->
+            <div
+              class="group flex flex-col items-center p-4 rounded-xl border border-gray-100 hover:border-green-200 hover:shadow-md transition text-center">
+              <div
+                class="w-14 h-14 rounded-full border-4 border-green-400 group-hover:border-green-500 flex items-center justify-center mb-3 transition">
+                <span class="text-xs font-black text-green-600 leading-none">CISM</span>
+              </div>
+              <p class="font-bold text-sm text-gray-800">CISM</p>
+              <p class="text-xs text-gray-400 mt-1">Certified Information Security Manager</p>
+              <span
+                class="mt-2 text-[10px] bg-green-50 text-green-600 px-2 py-0.5 rounded-full font-medium">ISACA</span>
+            </div>
+
+            <!-- CC (ISC2) -->
+            <div
+              class="group flex flex-col items-center p-4 rounded-xl border border-gray-100 hover:border-blue-200 hover:shadow-md transition text-center">
+              <div
+                class="w-14 h-14 rounded-xl bg-blue-500 group-hover:bg-blue-600 flex items-center justify-center mb-3 transition">
+                <span class="text-sm font-black text-white leading-none">CC</span>
+              </div>
+              <p class="font-bold text-sm text-gray-800">CC</p>
+              <p class="text-xs text-gray-400 mt-1">Certified in Cybersecurity</p>
+              <span class="mt-2 text-[10px] bg-blue-50 text-blue-600 px-2 py-0.5 rounded-full font-medium">(ISC)²</span>
+            </div>
+
+            <!-- McAfee -->
+            <div
+              class="group flex flex-col items-center p-4 rounded-xl border border-gray-100 hover:border-red-200 hover:shadow-md transition text-center col-start-auto">
+              <div
+                class="w-14 h-14 rounded-lg border-2 border-red-600 group-hover:bg-red-50 flex items-center justify-center mb-3 transition">
+                <i class="fa-solid fa-shield-halved text-red-600 text-xl"></i>
+              </div>
+              <p class="font-bold text-sm text-gray-800">McAfee</p>
+              <p class="text-xs text-gray-400 mt-1">Product Specialist Certified</p>
+              <span class="mt-2 text-[10px] bg-red-50 text-red-600 px-2 py-0.5 rounded-full font-medium">McAfee</span>
+            </div>
+
+          </div>
+
+          <!-- Legend -->
+          <div class="mt-8 pt-6 border-t border-gray-100 flex flex-wrap justify-center gap-4">
+            <span class="flex items-center gap-2 text-xs text-gray-500"><span
+                class="w-3 h-3 rounded-full bg-red-500 inline-block"></span>CompTIA</span>
+            <span class="flex items-center gap-2 text-xs text-gray-500"><span
+                class="w-3 h-3 rounded bg-gray-500 inline-block"></span>EC-Council</span>
+            <span class="flex items-center gap-2 text-xs text-gray-500"><span
+                class="w-3 h-3 rounded-full bg-red-500 inline-block border-2 border-red-400"></span>ISACA (CISA)</span>
+            <span class="flex items-center gap-2 text-xs text-gray-500"><span
+                class="w-3 h-3 rounded-full bg-green-500 inline-block border-2 border-green-400"></span>ISACA
+              (CISM)</span>
+            <span class="flex items-center gap-2 text-xs text-gray-500"><span
+                class="w-3 h-3 rounded bg-blue-500 inline-block"></span>(ISC)²</span>
+            <span class="flex items-center gap-2 text-xs text-gray-500"><span
+                class="w-3 h-3 rounded bg-red-600 inline-block border border-red-600"></span>McAfee</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact / CTA Section -->
+  <section id="contact" class="py-20 bg-slc-dark text-white relative overflow-hidden">
+    <div class="absolute inset-0 opacity-10"
+      style="background-image: radial-gradient(#a3e9a4 1px, transparent 1px); background-size: 30px 30px;"></div>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+      <h2 class="text-3xl md:text-4xl font-bold mb-6">พร้อมที่จะยกระดับความปลอดภัยให้องค์กรของคุณหรือยัง?</h2>
+      <p class="text-xl text-gray-300 mb-10 font-light">
+        ติดต่อทีมผู้เชี่ยวชาญจาก SLC เพื่อรับคำปรึกษาและออกแบบโซลูชัน Cyber Security ที่เหมาะสมกับธุรกิจของคุณ
+      </p>
+      <div class="flex flex-col sm:flex-row justify-center gap-6">
+        <a href="mailto:bd-slc@securitylifecycle.co.th"
+          class="px-8 py-4 bg-slc-green text-slc-dark hover:bg-[#8bdc8c] rounded-full font-bold text-lg transition flex items-center justify-center">
+          <i class="fa-solid fa-envelope mr-3"></i> ติดต่อฝ่ายขาย
+        </a>
+        <a href="tel:022577117"
+          class="px-8 py-4 bg-white/10 hover:bg-white/20 border border-white/30 rounded-full font-medium text-lg transition flex items-center justify-center">
+          <i class="fa-solid fa-phone mr-3"></i> 02-257-7117
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-gray-900 text-gray-400 py-12 border-t border-gray-800">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+        <div class="col-span-1 md:col-span-2">
+          <div class="flex items-center gap-3 mb-4">
+            <img src="images/42bc1985-0f80-46b9-84fc-d5f7a5728688.png" alt="SLC Logo"
+              class="h-8 w-auto object-contain" />
+            <span class="font-bold text-xl text-white tracking-tight">Security Life Cycle (SLC)</span>
+          </div>
+          <p class="text-sm mb-4 max-w-sm">บริษัทผู้ให้บริการด้าน Cyber Security ครบวงจร ในเครือ INET
+            มุ่งเน้นการรักษาความปลอดภัยให้ระบบองค์กรของคุณ</p>
+        </div>
+        <div>
+          <h4 class="text-white font-bold mb-4">ลิงก์ด่วน</h4>
+          <ul class="space-y-2 text-sm">
+            <li><a href="#about" class="hover:text-white transition">เกี่ยวกับเรา</a></li>
+            <li><a href="#services" class="hover:text-white transition">บริการทั้งหมด</a></li>
+            <li><a href="#why-us" class="hover:text-white transition">จุดเด่นและมาตรฐาน</a></li>
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-white font-bold mb-4">ติดต่อเรา</h4>
+          <ul class="space-y-3 text-sm">
+            <li class="flex gap-2">
+              <i class="fa-solid fa-location-dot mt-0.5 flex-shrink-0 text-slc-green"></i>
+              <span>1768 อาคารไทยซัมมิท ทาวเวอร์ ชั้น 10 ถ.เพชรบุรีตัดใหม่ แขวงบางกะปิ เขตห้วยขวาง กรุงเทพมหานคร
+                10310</span>
+            </li>
+            <li class="flex gap-2 items-center">
+              <i class="fa-solid fa-phone flex-shrink-0 text-slc-green"></i>
+              <a href="tel:022577117" class="hover:text-white transition">02-257-7117</a>
+            </li>
+            <li class="flex gap-2 items-center">
+              <i class="fa-solid fa-envelope flex-shrink-0 text-slc-green"></i>
+              <a href="mailto:bd-slc@securitylifecycle.co.th"
+                class="hover:text-white transition">bd-slc@securitylifecycle.co.th</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="border-t border-gray-800 mt-12 pt-8 text-sm text-center">
+        <p>&copy; 2025 Security Life Cycle (SLC) Co., Ltd. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal -->
+  <div id="serviceModal"
+    class="fixed inset-0 z-[100] hidden items-center justify-center p-4 sm:p-6 opacity-0 transition-opacity duration-300">
+    <div class="absolute inset-0 bg-gray-900/70 backdrop-blur-sm" onclick="closeModal()"></div>
+    <div
+      class="relative bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] flex flex-col transform scale-95 transition-transform duration-300"
+      id="modalContainer">
+      <div class="flex items-center justify-between p-6 border-b border-gray-100">
+        <div class="flex items-center gap-4">
+          <div id="modalIcon"
+            class="w-12 h-12 bg-slc-light text-slc-accent rounded-lg flex items-center justify-center text-2xl"></div>
+          <h3 class="text-2xl font-bold text-gray-900" id="modalTitle">Service Title</h3>
+        </div>
+        <button onclick="closeModal()" class="text-gray-400 hover:text-red-500 transition focus:outline-none">
+          <i class="fa-solid fa-xmark text-2xl"></i>
+        </button>
+      </div>
+      <div class="p-6 overflow-y-auto flex-grow text-gray-600 modal-content" id="modalBody"></div>
+      <div class="p-6 border-t border-gray-100 bg-gray-50 rounded-b-2xl flex justify-end gap-4">
+        <button onclick="closeModal()"
+          class="px-6 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition font-medium">ปิดหน้าต่าง</button>
+        <a href="#contact" onclick="closeModal()"
+          class="px-6 py-2 bg-slc-green text-slc-dark hover:bg-[#8bdc8c] rounded-lg font-bold transition shadow-md">สนใจบริการนี้</a>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/services.js"></script>
+</body>
+
+</html>

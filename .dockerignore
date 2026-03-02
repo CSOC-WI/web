@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# SSL certificates (mounted as volume at runtime — never bake into image)
+ssl/*.crt
+ssl/*.key
+ssl/*.pem
+
+# Admin Basic Auth password file (mounted as volume at runtime)
+.htpasswd
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor directories
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Excel files (not needed in container)
+*.xlsx
+*.xls

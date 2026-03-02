@@ -1,0 +1,74 @@
+services:
+
+  # ── MariaDB Database ───────────────────────────────────────────
+  mariadb:
+    image: mariadb:10.11
+    container_name: slc-mariadb
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: ${DB_ROOT_PASS}
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_PASSWORD: ${DB_PASS}
+    volumes:
+      - mariadb_data:/var/lib/mysql
+      - ./api/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - backend
+    healthcheck:
+      test: [ "CMD", "healthcheck.sh", "--su-mysql", "--connect", "--innodb_initialized" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
+  # ── Node.js API ────────────────────────────────────────────────
+  slc-api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile
+    container_name: slc-api
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DB_HOST: mariadb
+      DB_PORT: "3306"
+      JWT_SECRET: ${JWT_SECRET}
+    networks:
+      - backend
+      - frontend
+    volumes:
+      - uploads_data:/app/uploads
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    # API is NOT exposed to host — Nginx proxies to it
+
+    # ── Nginx Web Server ───────────────────────────────────────────
+  slc-web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: slc-website
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: unless-stopped
+    networks:
+      - frontend
+    depends_on:
+      - slc-api
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      - ./ssl:/etc/nginx/ssl:ro
+      - uploads_data:/usr/share/nginx/html/uploads:ro
+
+volumes:
+  mariadb_data:
+  uploads_data:
+
+
+networks:
+  backend:
+    internal: true # MariaDB not accessible from outside
+  frontend:
